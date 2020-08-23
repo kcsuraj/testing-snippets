@@ -1,0 +1,103 @@
+<Meta title="react/testing library cheatsheet" />
+
+### A short guide to all the exported functions in React Testing Library
+
+**Render a component**
+
+```js
+import { render } from "@testing-library/react";
+
+const result = render(<MyComponent />);
+```
+
+**Search the DOM**
+
+```js
+import { screen, render } from "@testing-library/react";
+
+render(
+  <label>
+    Remember Me <input type="checkbox" />
+  </label>
+);
+const checkboxInput = screen.getByRole("checkbox", {
+  name: /remember me/i,
+});
+```
+
+**Interact with element**
+
+```js
+import { userEvent } from "@testing-library/user-event";
+
+// userEvent simulates advanced browser interactions like
+// clicks, type, uploads, tabbing etc
+// Click on a button
+
+userEvent.click(screen.getByRole("button"));
+
+// Types HelloWorld in a text field
+userEvent.type(screen.getByRole("textbox"), "Hello World");
+```
+
+**Wait for appearance**
+
+```js
+test('movie title appears', async () => {
+render(<Movie />)
+
+// the element isn't available yet, so wait for it:
+const movieTitle = await screen.findByText(
+/the lion king/i,
+)
+
+// the element is there but we want to wait for it
+// to be removed
+await waitForElementToBeRemoved(() =>
+screen.getByLabelText(/loading/i),
+)
+
+// we want to wait until an assertion passes
+await waitFor(() =>
+expect(mockFn).toHaveBeenCalledWith('some arg'),
+)
+```
+
+**Text matches**
+
+```js
+render(
+  <label>
+    Remember Me <input type="checkbox" />
+  </label>
+);
+
+screen.getByRole("checkbox", { name: /remember me/i });
+screen.getByRole("checkbox", { name: "Remember Me" });
+
+// other queries accept text matches as well
+// the text match argument can also be a function
+screen.getByText((text, element) => {
+  /* return true/false
+   */
+});
+```
+
+**Search variants (result)**
+
+```
+getBy           Element or Error
+getAllBy        Element[] or Error
+queryBy         Element or null
+queryAllBy      Element[] or []
+findBy          Promise<Element> or Promise<rejection>
+findAllBy       Promise<Element[]> or Promise<rejection>
+```
+
+```js
+```
+
+```js
+```
+
+Ref: https://testing-library.com/docs/react-testing-library/cheatsheet
