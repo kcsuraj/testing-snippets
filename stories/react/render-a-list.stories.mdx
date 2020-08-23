@@ -2,13 +2,17 @@
 
 ### Test a component that renders a list
 
-`ContactList.jsx`
+`ContactList.tsx`
 
-```js
-import React from "react";
+```tsx
+import React, { FC } from "react";
 
-function ContactList(props) {
-  if (!props.contacts || !props.contacts.length) {
+interface IProps {
+  contacts: string[];
+}
+
+const ContactList: FC<IProps> = ({ contacts }) => {
+  if (!contacts || !contacts.length) {
     return <div>no contacts</div>;
   }
 
@@ -21,14 +25,14 @@ function ContactList(props) {
       ))}
     </ul>
   );
-}
+};
 ```
 
-`ContactList.test.jsx`
+`ContactList.test.tsx`
 
-```js
+```tsx
 import React from "react";
-import { render, cleanup } from "react-testing-library";
+import { render, cleanup } from "@testing-library/react";
 
 test("renders no contacts when there are no contacts", () => {
   const { getByText } = render(<ContactList />);
