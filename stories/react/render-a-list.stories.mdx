@@ -1,0 +1,57 @@
+<Meta title="react/render a list" />
+
+### Test a component that renders a list
+
+`ContactList.jsx`
+
+```js
+import React from "react";
+
+function ContactList(props) {
+  if (!props.contacts || !props.contacts.length) {
+    return <div>no contacts</div>;
+  }
+
+  return (
+    <ul>
+      {props.contacts.map((name, id) => (
+        <li key={id} data-testid="contact-name">
+          {name}
+        </li>
+      ))}
+    </ul>
+  );
+}
+```
+
+`ContactList.test.jsx`
+
+```js
+import React from "react";
+import { render, cleanup } from "react-testing-library";
+
+test("renders no contacts when there are no contacts", () => {
+  const { getByText } = render(<ContactList />);
+  expect(getByText(/no contacts/i));
+});
+
+test("renders contacts", () => {
+  const fakeContacts = [
+    { id: 1, name: "Bob" },
+    { id: 2, name: "Marcy" },
+  ];
+
+  const { getAllByTestId } = render(<ContactList contacts={fakeContacts} />);
+
+  const contactNames = getAllByTestId("contact-name").map(
+    (li) => li.textContent
+  );
+
+  const fakeContactNames = fakeContacts.map((c) => c.name);
+
+  expect(contactNames).toEqual(fakeContactNames);
+  //   expect(contactNames).toMatchInlineSnapshot(`Array ["Marcy", "Bob"]`);
+});
+```
+
+Ref: https://youtu.be/Qf2k9zt3S_A

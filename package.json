@@ -1,0 +1,27 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "start-storybook -p 6006",
+    "build": "build-storybook",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d storybook-static"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@storybook/addon-actions": "^6.0.16",
+    "@storybook/addon-essentials": "^6.0.16",
+    "@storybook/addon-links": "^6.0.16",
+    "@storybook/html": "^6.0.16",
+    "babel-loader": "^8.1.0",
+    "gh-pages": "^3.1.0",
+    "react-is": "^16.13.1"
+  },
+  "dependencies": {}
+}
